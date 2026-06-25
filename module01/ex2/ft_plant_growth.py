@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 
 class Plant:
+    name: str
+    height: float
+    num_days: int
+    grow_rate: float
+
     def show(self) -> None:
         height = round(self.height, 1)
         print(f"{self.name}: {height}cm, {self.num_days} days old")
