@@ -104,7 +104,7 @@ class Tree(Plant):
               f"{height}cm long and {self.trunk_diameter}cm wide.")
 
     def show_shade(self) -> None:
-        print(f"{self._shade_count} shade")
+        print(f" {self._shade_count} shade")
 
     def show(self) -> None:
         super().show()
@@ -146,6 +146,12 @@ class Seed(Flower):
         print(f"Seeds: {self.seeds}")
 
 
+def display_stats(plant: Plant) -> None:
+    plant._stats.display()
+    if isinstance(plant, Tree):
+        plant.show_shade()
+
+
 if __name__ == "__main__":
     rose = Flower("Rose", 15, 10, "red")
     print("=== Garden statistics ===")
@@ -156,25 +162,23 @@ if __name__ == "__main__":
     print("=== Flower")
     rose.show()
     print(f"[statistics for {rose.name}]")
-    rose._stats.display()
+    display_stats(rose)
     print("[asking the rose to grow and bloom]")
     rose.grow()
     rose.bloom()
     rose.show()
     print(f"[statistics for {rose.name}]")
-    rose._stats.display()
+    display_stats(rose)
     print()
     oak = Tree("Oak", 200.0, 365, 5.0)
     print("=== Tree")
     oak.show()
     print(f"[statistics for {oak.name}]")
-    oak._stats.display()
-    oak.show_shade()
+    display_stats(oak)
     print("[asking the oak to produce shade]")
     oak.produce_shade()
     print(f"[statistics for {oak.name}]")
-    oak._stats.display()
-    oak.show_shade()
+    display_stats(oak)
     print()
     sunflower = Seed("Sunflower", 80, 45, "yellow")
     print("=== Seed")
@@ -186,10 +190,10 @@ if __name__ == "__main__":
     sunflower.bloom(42)
     sunflower.show()
     print(f"[statistics for {sunflower.name}]")
-    sunflower._stats.display()
+    display_stats(sunflower)
     print()
     anon = Plant.create_anonymous()
     print("=== Anonymous")
     anon.show()
     print(f"[statistics for {anon.name}]")
-    anon._stats.display()
+    display_stats(anon)
