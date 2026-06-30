@@ -7,6 +7,15 @@ class Plant:
             self._age_count: int = 0
             self._show_count: int = 0
 
+        def increment_grow(self) -> None:
+            self._grow_count += 1
+
+        def increment_age(self) -> None:
+            self._age_count += 1
+
+        def increment_show(self) -> None:
+            self._show_count += 1
+
         def display(self) -> None:
             print(f"Stats: {self._grow_count} grow, "
                   f"{self._age_count} age, "
@@ -22,11 +31,11 @@ class Plant:
 
     def grow(self) -> None:
         self._height += self.grow_rate
-        self._stats._grow_count += 1
+        self._stats.increment_grow()
 
     def age(self) -> None:
         self._num_days += 1
-        self._stats._age_count += 1
+        self._stats.increment_age()
 
     def get_height(self) -> float:
         return self._height
@@ -70,7 +79,7 @@ class Plant:
         _height = round(self._height, 1)
         print(f"{self.name}: {_height:.1f}cm,"
               f" {self._num_days} days old")
-        self._stats._show_count += 1
+        self._stats.increment_show()
 
 
 class Flower(Plant):
