@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 def input_temperature(temp_str: str) -> int:
     print(f"Input data is {temp_str}")
     temp = int(temp_str)
