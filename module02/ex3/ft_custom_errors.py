@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
+# Exceção base do domínio do nosso sistema
 class GardenError(Exception):
     def __init__(self, message: str = "Unknown garden error") -> None:
         super().__init__(message)
 
 
+# Subclasses que herdam de GardenError (Polimorfismo / Herança)
 class PlantError(GardenError):
     def __init__(self, message: str = "Unknown plant error") -> None:
         super().__init__(message)
@@ -33,6 +35,7 @@ def test_water_error() -> None:
 
 def test_garden_errors() -> None:
     print("Testing catching all garden errors...")
+    # Mostro aqui que capturar a classe PAI captura auto as classes FILHAS
     try:
         raise PlantError("The tomato plant is wilting!")
     except GardenError as e:

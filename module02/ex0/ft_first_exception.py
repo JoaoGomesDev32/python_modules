@@ -9,8 +9,13 @@ def input_temperature(temp_str: str) -> int:
 
 
 def test_temperature() -> None:
+    # Teste 1: Entrada válida
     try:
         input_temperature("25")
+    except ValueError as e:
+        print(f"Caught input_temperature error: {e}")
+    # Teste 2: Entrada inválida (separada para garantir que o fluxo continue)
+    try:
         input_temperature("abc")
     except ValueError as e:
         print(f"Caught input_temperature error: {e}")
