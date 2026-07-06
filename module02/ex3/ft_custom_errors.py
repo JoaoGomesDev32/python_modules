@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 class GardenError(Exception):
     def __init__(self, message: str = "Unknown garden error") -> None:
         super().__init__(message)
@@ -22,7 +24,7 @@ def test_plant_error() -> None:
 
 
 def test_water_error() -> None:
-    print("\nTesting WaterError...")
+    print("Testing WaterError...")
     try:
         raise WaterError("Not enough water in the tank!\n")
     except WaterError as e:
@@ -46,4 +48,4 @@ if __name__ == "__main__":
     test_plant_error()
     test_water_error()
     test_garden_errors()
-    print("\nAll custom error types work correctly")
+    print("All custom error types work correctly")
