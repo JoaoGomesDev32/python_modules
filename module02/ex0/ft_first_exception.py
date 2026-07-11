@@ -1,15 +1,25 @@
+#!/usr/bin/env python3
+
 def input_temperature(temp_str: str) -> int:
     print(f"Input data is {temp_str}")
-    print(f"Temperature is now {temp_str}°C")
+    temp = int(temp_str)
+    print(f"Temperature is now {temp}°C")
     print()
-    return int(temp_str)
+    return temp
+
 
 def test_temperature() -> None:
+    # Teste 1: Entrada válida
     try:
         input_temperature("25")
+    except ValueError as e:
+        print(f"Caught input_temperature error: {e}")
+    # Teste 2: Entrada inválida (separada para garantir que o fluxo continue)
+    try:
         input_temperature("abc")
-    except:
-        print("Caught input_temperature error: invalid literal for int() with base 10: 'abc'")
+    except ValueError as e:
+        print(f"Caught input_temperature error: {e}")
+
 
 if __name__ == "__main__":
     print("=== Garden Temperature ===")
