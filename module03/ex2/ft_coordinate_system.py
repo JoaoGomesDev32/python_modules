@@ -8,17 +8,21 @@ def get_player_pos() -> tuple[float, float, float]:
             print("Invalid syntax")
             continue
         try:
-            x = float(parts[0])
-            y = float(parts[1])
-            z = float(parts[2])
-            return (x, y, z)
+            coords = tuple(float(p.strip()) for p in parts)
+            return coords  # type: ignore
         except ValueError as e:
-            print(f"Error on parameter '{parts[...]}': {e}")
+            for part in parts:
+                try:
+                    float(part.strip())
+                except ValueError as ve:
+                    print(f"Error on parameter '{part.strip()}': {ve}")
 
 
 if __name__ == "__main__":
     print(f"=== Game Coordinate System ===\n")
     print("Get a first set of coordinates")
-    get_player_pos()
+    res1 = get_player_pos()
+    print(f"Got a first tuple: {res1}")
+    print(f"It includes: X={res1[0]}, Y={res1[1]}, Z={res1[2]}")
     print("Get a second set of coordinates")
-    get_player_pos()
+    res2 = get_player_pos()
