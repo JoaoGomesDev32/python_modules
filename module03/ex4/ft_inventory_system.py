@@ -8,11 +8,11 @@ if __name__ == "__main__":
     for arg in sys.argv[1:]:
         parts = arg.split(":")
         if len(parts) != 2:
-            print(f"Error - invalid parameter '{arg}")
+            print(f"Error - invalid parameter '{arg}'")
             continue
         name, qty = parts
         if name in inventory:
-            print(f"Redundant item '{name} - discarding")
+            print(f"Redundant item '{name}' - discarding")
             continue
         try:
             inventory[name] = int(qty)
@@ -27,8 +27,9 @@ if __name__ == "__main__":
         print(f"Got inventory: {inventory}")
         print(f"Item list: {list(inventory.keys())}")
         print(f"Total quantity of the {len(inventory)} items: {total}")
-        for name, qty in inventory.items():
-            print(f"Item {name} represents {round(qty / total * 100, 1)}%")
+        for name, quantity in inventory.items():
+            print(f"Item {name} represents "
+                  f"{round(quantity / total * 100, 1)}%")
         most = max(inventory, key=lambda k: inventory[k])
         least = min(inventory, key=lambda k: inventory[k])
         print(f"Item most abundant: {most} with quantity {inventory[most]}")
