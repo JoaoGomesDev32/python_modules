@@ -29,7 +29,9 @@ if __name__ == "__main__":
     all_achievements = set.union(*players.values())
     print(f"\nAll distinct achievements: {all_achievements}")
 
-    common_achievements = set.difference(*players.values())
-    print(f"\nCommon achievements: {common_achievements}")
-
-#    print(set.difference(players["Alice"].values()))
+    common_achievements = set.intersection(*players.values())
+    print(f"\nCommon achievements: {common_achievements}\n")
+    for name, achievements in players.items():
+        others = set.union(*[ach for n, ach in players.items() if n != name])
+        only_has = achievements - others
+        print(f"Only {name} has: {only_has}")
