@@ -8,6 +8,7 @@ ACHIEVEMENTS = [
     "Boss Slayer", "Hidden Path Finder"
 ]
 
+
 def gen_player_achievements() -> set[str]:
     count = random.randint(3, 8)
     return set(random.sample(ACHIEVEMENTS, count))
@@ -31,7 +32,13 @@ if __name__ == "__main__":
 
     common_achievements = set.intersection(*players.values())
     print(f"\nCommon achievements: {common_achievements}\n")
+
     for name, achievements in players.items():
         others = set.union(*[ach for n, ach in players.items() if n != name])
-        only_has = achievements - others
+        only_has = achievements.difference(others)
         print(f"Only {name} has: {only_has}")
+
+    print()
+    for name, achievements in players.items():
+        missing = all_achievements.difference(achievements)
+        print(f"{name} is missing: {missing}")
