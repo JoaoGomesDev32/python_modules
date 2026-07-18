@@ -1,0 +1,23 @@
+import random
+
+
+ACHIEVEMENTS = [
+    "Crafting Genius", "Strategist", "World Savior", "Speed Runner",
+    "Survivor", "Master Explorer", "Treasure Hunter", "Unstoppable",
+    "First Steps", "Collector Supreme", "Untouchable", "Sharp Mind",
+    "Boss Slayer", "Hidden Path Finder"
+]
+
+def gen_player_achievements() -> set[str]:
+    count = random.randint(3, 8)
+    return set(random.sample(ACHIEVEMENTS, count))
+
+
+if __name__ == "__main__":
+    print("=== Achievement Tracker System ===\n")
+    players = {
+        "Alice": gen_player_achievements(),
+        "Bob": gen_player_achievements(),
+        "Charlie": gen_player_achievements(),
+        "Dylan": gen_player_achievements(),
+    }
