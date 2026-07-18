@@ -11,3 +11,27 @@ if __name__ == "__main__":
             print(f"Error - invalid parameter '{arg}")
             continue
         name, qty = parts
+        if name in inventory:
+            print(f"Redundant item '{name} - discarding")
+            continue
+        try:
+            inventory[name] = int(qty)
+        except ValueError as e:
+            print(f"Quantity error for '{name}': {e}")
+
+    if not inventory:
+        print("No inventory. Usage: python3 ft_inventory_system.py "
+              "<item>:<qty> ...")
+    else:
+        total = sum(inventory.values())
+        print(f"Got inventory: {inventory}")
+        print(f"Item list: {list(inventory.keys())}")
+        print(f"Total quantity of the {len(inventory)} items: {total}")
+        for name, qty in inventory.items():
+            print(f"Item {name} represents {round(qty / total * 100, 1)}%")
+        most = max(inventory, key=lambda k: inventory[k])
+        least = min(inventory, key=lambda k: inventory[k])
+        print(f"Item most abundant: {most} with quantity {inventory[most]}")
+        print(f"Item least abundant: {least} with quantity {inventory[least]}")
+        inventory.update({"magic_item": 1})
+        print(f"Updated inventory: {inventory}")
