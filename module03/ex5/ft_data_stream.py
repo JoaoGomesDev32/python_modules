@@ -12,6 +12,7 @@ def gen_event() -> Generator[tuple[str, str], None, None]:
 
 if __name__ == "__main__":
     print("=== Game Data Stream Processor ===")
+    generator = gen_event()
     for i in range(1000):
-        event = next(gen_event)
+        event = next(generator)
         print(f"Event {i}: Player {event[0]} did action {event[1]}")
