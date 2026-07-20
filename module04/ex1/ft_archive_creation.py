@@ -29,11 +29,11 @@ if __name__ == "__main__":
         content = read_file(sys.argv[1])
         if content is not None:
             lines = content.splitlines()
-            new_content = "\n".join(line + "#" for line in lines)
+            new_content = "\n".join(line + "#" for line in lines) + "\n"
             print("\nTransform data:")
-            print("---")
+            print("---\n")
             print(new_content, end="")
-            print("---")
+            print("\n---")
             save_mode = input("Enter new file name (or empty): ")
             if save_mode:
                 new_file: typing.IO[str] | None = None
