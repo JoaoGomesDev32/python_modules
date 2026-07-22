@@ -11,11 +11,7 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
-        try:
-            self.validate()
-        except ValueError as e:
-            print(f"Trying to validate input {e}")
-
+        pass
 
 
 class NumericProcessor(DataProcessor):
@@ -92,17 +88,28 @@ class LogProcessor(DataProcessor):
             )
         return False
 
-    def ingest(self, data):
+    def ingest(self, data: list[dict[str, str]] | dict[str, str]) -> None:
         if not self.validate(data):
             raise ValueError("Improper log data")
         if isinstance(data, list):
             for item in data:
-                self._storage.append(str(item))
+                self._storage.append(
+                    f"{item['log_level']}: {item['log_message']}"
+                )
         else:
-            self._storage.append(f"{item['log_level']}: {item['log_message']}")
+            self._storage.append(
+                f"{data['log_level']}: {data['log_message']}"
+            )
 
     def output(self) -> tuple[int, str]:
         value = self._storage.pop(0)
         rank = self._rank
         self._rank += 1
         return (rank, value)
+
+
+if __name__ == "__main__":
+    print("=== Code Nexus - Data Processor ===\n")
+
+    print("Testing Numeric Processor...")
+    NumericProcessor.ingest('42', True)
