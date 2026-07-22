@@ -111,5 +111,18 @@ class LogProcessor(DataProcessor):
 if __name__ == "__main__":
     print("=== Code Nexus - Data Processor ===\n")
 
-    print("Testing Numeric Processor...")
-    NumericProcessor.ingest('42', True)
+    numeric = NumericProcessor()
+    print(f"Trying to validate input '42': {numeric.validate(42)}")
+    print(f"Trying to validate input 'Hello': {numeric.validate('Hello')}")
+
+    print("Test invalid ingestion of string 'foo' without prior validation:")
+    try:
+        numeric.ingest('foo')  # type: ignore
+    except ValueError as e:
+        print(f"Got exception: {e}")
+
+    numeric.ingest([1, 2, 3, 4, 5])
+    print("Extracting 3 values...")
+    for _ in range(3):
+        rank, value = numeric.output()
+        print(f"Numeric value {rank}: {value}")
