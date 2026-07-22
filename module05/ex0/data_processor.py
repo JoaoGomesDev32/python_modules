@@ -47,11 +47,31 @@ class NumericProcessor(DataProcessor):
 
 
 class TextProcessor(DataProcessor):
-    def validate(self, data: str):
-        return super().validate(data)
+    def __init__(self) -> None:
+        self._storage: list[str] = []
+        self._rank: int = 0
+
+    def validate(self, data: Any) ->bool:
+        if isinstance(data, str):
+            return True
+        if isinstance(data, list):
+            return all(isinstance(x, str) for x in data)
+        return False
 
     def ingest(self, data):
-        return super().ingest(data)
+        if not self.validate(data):
+            raise ValueError("Improper string data")
+        if isinstance(data, list):
+            for item in data:
+                self._storage.append(str(item))
+        else:
+            self._storage.append(str(data))
+
+    def output(self) -> tuple[int, str]:
+        value = self._storage.pop(0)
+        rank = self._rank
+        self._rank += 1
+        return (rank, value)
 
 
 class LogProcessor(DataProcessor):
