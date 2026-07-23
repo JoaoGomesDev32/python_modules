@@ -4,6 +4,9 @@ import typing
 
 
 class DataProcessor(ABC):
+    def __init__(self) -> None:
+        self._storage: list[str] = []
+
     @abstractmethod
     def validate(self, data: Any) -> bool:
         pass
@@ -18,6 +21,7 @@ class DataProcessor(ABC):
 
 class NumericProcessor(DataProcessor):
     def __init__(self) -> None:
+        super().__init__()
         self._storage: list[str] = []
         self._rank: int = 0
 
@@ -46,6 +50,7 @@ class NumericProcessor(DataProcessor):
 
 class TextProcessor(DataProcessor):
     def __init__(self) -> None:
+        super().__init__()
         self._storage: list[str] = []
         self._rank: int = 0
 
@@ -74,6 +79,7 @@ class TextProcessor(DataProcessor):
 
 class LogProcessor(DataProcessor):
     def __init__(self) -> None:
+        super().__init__()
         self._storage: list[str] = []
         self._rank: int = 0
 
@@ -124,7 +130,7 @@ class DataStream():
             handled = False
             for proc in self._processors:
                 if proc.validate(element):
-                    proc.ingest(element)  # type: ignore[arg-type]
+                    proc.ingest(element)
                     name = type(proc).__name__
                     if isinstance(element, list):
                         self._total[name] += len(element)
@@ -149,44 +155,41 @@ class DataStream():
 
 
 if __name__ == "__main__":
-    print("=== Code Nexus - Data Data Stream ===\n")
+    print("=== Code Nexus - Data Stream ===\n")
 
+    stream = DataStream()
     print("Initialize Data Stream...")
     print("== DataStream statistics ==")
-    numeric = NumericProcessor()
-    print(f" Trying to validate input '42': {numeric.validate(42)}")
-    print(f" Trying to validate input 'Hello': {numeric.validate('Hello')}")
-    print(" Test invalid ingestion of string 'foo' without prior validation:")
-    try:
-        numeric.ingest('foo')  # type: ignore
-    except ValueError as e:
-        print(f" Got exception: {e}")
-    print(" Processing data: [1, 2, 3, 4, 5]")
-    numeric.ingest([1, 2, 3, 4, 5])
-    print(" Extracting 3 values...")
+    stream.print_processors_stats()
+
+    print("\nRegistering Numeric Processor")
+    stream.register_processor(NumericProcessor())
+
+    batch = ['Hello world', [3.14, -1, 2.71],
+             [{'log_level': 'WARNING',
+               'log_message': 'Telnet access! Use ssh instead'},
+              {'log_level': 'INFO',
+               'log_message': 'User wil is connected'}],
+             42, ['Hi', 'five']]
+
+    print(f"\nSend first batch of data on stream: {batch}")
+    stream.process_stream(batch)
+    print("== DataStream statistcs ==")
+    stream.print_processors_stats()
+
+    print("\nRegistering other data processors")
+    stream.register_processor(TextProcessor())
+    stream.register_processor(LogProcessor())
+    print("Send the same batch")
+    stream.process_stream(batch)
+    print("== DataStream statistics ==")
+    stream.print_processors_stats()
+
+    print("\nConsume some elements: Numeric 3, Text 2, Log 1")
     for _ in range(3):
-        rank, value = numeric.output()
-        print(f" Numeric value {rank}: {value}")
-
-    print("\nTesting Text Processor...")
-    text = TextProcessor()
-    print(f" Trying to validate input '42': {text.validate(42)}")
-    print(" Processing data: ['Hello', 'Nexus', 'World']")
-    text.ingest(['Hello', 'Nexus', 'World'])
-    print(" Extracting 1 value...")
-    rank, value = text.output()
-    print(f" Text value {rank}: {value}")
-
-    print("\nTesting Log Processor...")
-    log = LogProcessor()
-    print(f" Trying to validate input 'Hello': {log.validate('Hello')}")
-    logs = [
-        {'log_level': 'NOTICE', 'log_message': 'Connection to server'},
-        {'log_level': 'ERROR', 'log_message': 'Unauthorized access!!'}
-    ]
-    print(f" Processing data: {logs}")
-    log.ingest(logs)
-    print(" Extracting 2 values...")
+        stream._processors[0].output()
     for _ in range(2):
-        rank, value = log.output()
-        print(f" Log entry {rank}: {value}")
+        stream._processors[1].output()
+    stream._processors[2].output()
+    print("== DataStream statistics ==")
+    stream.print_processors_stats()
