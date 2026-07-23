@@ -127,7 +127,12 @@ class CSVPlugin:
         print(f"CSV Output:\n{values}")
 
 
-
+class JSONPlugin:
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        items = ", ".join(
+            f'"item_{rank}": "{value}"' for rank, value in data
+        )
+        print(f"JSON Output:\n{{{items}}}")
 
 
 class DataStream():
