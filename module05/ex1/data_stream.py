@@ -137,7 +137,15 @@ class DataStream():
                       f"in stream: {element}")
 
     def print_processors_stats(self) -> None:
-        pass
+        if not self._processors:
+            print("No processor found, no data")
+            return
+        for proc in self._processors:
+            name = type(proc).__name__
+            total = self._total[name]
+            remaining = len(proc._storage)
+            print(f"{name}: total {total} items processed, "
+                  f"remaining {remaining} on processor")
 
 
 if __name__ == "__main__":
