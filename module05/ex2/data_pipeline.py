@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
+from typing import Any, Protocol
 import typing
 
 
@@ -116,6 +116,20 @@ class LogProcessor(DataProcessor):
         return (rank, value)
 
 
+class ExportPlugin(Protocol):
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        pass
+
+
+class CSVPlugin:
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        values = ",".join(value for _, value in data)
+        print(f"CSV Output:\n{values}")
+
+
+
+
+
 class DataStream():
     def __init__(self) -> None:
         self._processors: list[DataProcessor] = []
@@ -154,14 +168,6 @@ class DataStream():
                   f"remaining {remaining} on processor")
 
     def process_output(self, nb: int, plugin: ExportPlugin) -> None:
-        pass
-
-
-class ExportPlugin(Protocol):
-    def __int__(self) -> None:
-        pass
-
-    def process_output(self, data: list[tuple[int, str]]) -> None:
         pass
 
 
