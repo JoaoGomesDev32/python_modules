@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
+
 class DataProcessor(ABC):
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -11,7 +12,7 @@ class DataProcessor(ABC):
         pass
 
     def output(self) -> tuple[int, str]:
-        pass
+        raise NotImplementedError
 
 
 class NumericProcessor(DataProcessor):
@@ -47,14 +48,14 @@ class TextProcessor(DataProcessor):
         self._storage: list[str] = []
         self._rank: int = 0
 
-    def validate(self, data: Any) ->bool:
+    def validate(self, data: Any) -> bool:
         if isinstance(data, str):
             return True
         if isinstance(data, list):
             return all(isinstance(x, str) for x in data)
         return False
 
-    def ingest(self, data):
+    def ingest(self, data: str | list[str]) -> None:
         if not self.validate(data):
             raise ValueError("Improper text data")
         if isinstance(data, list):
@@ -75,7 +76,7 @@ class LogProcessor(DataProcessor):
         self._storage: list[str] = []
         self._rank: int = 0
 
-    def validate(self, data: Any) ->bool:
+    def validate(self, data: Any) -> bool:
         if isinstance(data, dict):
             return all(isinstance(k, str) and isinstance(v, str)
                        for k, v in data.items())
