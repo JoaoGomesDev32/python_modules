@@ -172,8 +172,14 @@ class DataStream():
             print(f"{name}: total {total} items processed, "
                   f"remaining {remaining} on processor")
 
-    def process_output(self, nb: int, plugin: ExportPlugin) -> None:
-        pass
+    def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+        for proc in self._processors:
+            collected: list[tuple[int, str]] = []
+            for _ in range(nb):
+                if proc._storage:
+                    collected.append(proc.output())
+            if collected:
+                plugin.process_output(collected)
 
 
 if __name__ == "__main__":
