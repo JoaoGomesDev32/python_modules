@@ -1,4 +1,4 @@
-from .dark_spellbook import dark_spell_allowed_ingredients  # top-level: circular
+from .dark_spellbook import dark_spell_allowed_ingredients  # circular
 
 
 def validate_dark_ingredients(ingredients: str) -> str:
