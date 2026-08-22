@@ -41,12 +41,12 @@ if __name__ == "__main__":
             if save_mode:
                 new_file: typing.IO[str] | None = None
                 try:
+                    print(f"Saving data to '{save_mode}'")
                     new_file = open(save_mode, "w")
                     new_file.write(new_content)
-                    print(f"Saving data to '{save_mode}'")
                     print(f"Data saved in file '{save_mode}'.")
                 except OSError as e:
-                    sys.stderr.write(f"[STDERR]Error opening file"
+                    sys.stderr.write(f"[STDERR] Error opening file"
                                      f" '{save_mode}': {e}\n")
                     sys.stderr.flush()
                     print("Data not saved.")
