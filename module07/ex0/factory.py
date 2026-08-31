@@ -17,12 +17,12 @@ class FlameFactory(CreatureFactory):
         return Flameling()
 
     def create_evolved(self) -> Creature:
-            return Pyrodon()
+        return Pyrodon()
 
 
 class AquaFactory(CreatureFactory):
     def create_base(self) -> Creature:
-         return Aquabub()
+        return Aquabub()
 
     def create_evolved(self) -> Creature:
-         return Torragon
+        return Torragon()
