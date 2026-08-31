@@ -1,9 +1,9 @@
-from ex1.creature import Shiftling
+from ex1.creature import Morphagon
 
-s = Shiftling()
-print(s.describe())
-print(s.attack())
-print(s.transform())
-print(s.attack())
-print(s.revert())
-print(s.attack())
+m = Morphagon()
+print(m.describe())
+print(m.attack())
+print(m.transform())
+print(m.attack())
+print(m.revert())
+print(m.attack())
