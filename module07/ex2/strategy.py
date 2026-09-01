@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from ex0.creature import Creature
 from .errors import InvalidStrategyError
-from ex1.capability import TransformCapability
+from ex1.capability import TransformCapability, HealCapability
 
 
 class BattleStrategy(ABC):
@@ -16,7 +16,7 @@ class BattleStrategy(ABC):
 
 class NormalStrategy(BattleStrategy):
     def is_valid(self, creature: Creature) -> bool:
-        return True # válida pra qualquer Creature
+        return True
 
     def act(self, creature: Creature) -> str:
         if not self.is_valid(creature):
@@ -26,16 +26,27 @@ class NormalStrategy(BattleStrategy):
 
 
 class AggressiveStrategy(BattleStrategy):
-    def attack(self) -> str:
-        pass
+    def is_valid(self, creature: Creature) -> bool:
+        return isinstance(creature, TransformCapability)
 
-    def revert(self) -> str:
-        pass
+    def act(self, creature: Creature) -> str:
+        if not self.is_valid(creature):
+            raise InvalidStrategyError(f"Invalid Creature '{creature.name}'"
+                                       f" for this aggressive strategy")
+        assert isinstance(creature, TransformCapability)
+        return (
+            f"{creature.transform()}\n{creature.attack()}"
+            f"\n{creature.revert()}"
+        )
 
 
 class DefensiveStrategy(BattleStrategy):
-    def attack(self) -> str:
-        pass
+    def is_valid(self, creature: Creature) -> bool:
+        return isinstance(creature, HealCapability)
 
-    def heal(self) -> str:
-        pass
+    def act(self, creature: Creature) -> str:
+        if not self.is_valid(creature):
+            raise InvalidStrategyError(f"Invalid Creature '{creature.name}'"
+                                       f" for this defensive strategy")
+        assert isinstance(creature, HealCapability)
+        return f"{creature.attack()}\n{creature.heal()}"
