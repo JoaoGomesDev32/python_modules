@@ -35,7 +35,7 @@ class Shiftling(Creature, TransformCapability):
 
 class Bloomelle(Creature, HealCapability):
     def __init__(self) -> None:
-        Creature.__init__(self, "Bloomelle", "Grass")
+        Creature.__init__(self, "Bloomelle", "Grass/Fairy")
 
     def attack(self) -> str:
         return f"{self.name} uses Petal Dance!"
@@ -46,7 +46,7 @@ class Bloomelle(Creature, HealCapability):
 
 class Morphagon(Creature, TransformCapability):
     def __init__(self) -> None:
-        Creature.__init__(self, "Morphagon", "Normal")
+        Creature.__init__(self, "Morphagon", "Normal/Dragon")
         TransformCapability.__init__(self)
 
     def attack(self) -> str:
