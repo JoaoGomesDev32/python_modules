@@ -20,7 +20,7 @@ def battle_pair(opponent_a: Opponent, opponent_b: Opponent) -> None:
 
     print("* Battle *")
     print(creature_a.describe())
-    print(" vs ")
+    print(" vs.")
     print(creature_b.describe())
     print(" now fight!")
 
@@ -52,14 +52,17 @@ def main() -> None:
     defensive = DefensiveStrategy()
 
     print("Tournament 0 (basic)")
+    print("[ (Flameling+Normal), (Healing+Defensive) ]")
     battle([(flame, normal), (healing, defensive)])
     print()
 
     print("Tournament 1 (error)")
+    print("[ (Flameling+Agressive), (Healing+Defensive) ]")
     battle([(flame, aggressive), (healing, defensive)])
     print()
 
     print("Tournament 2 (multiple)")
+    print("[ (Aquabub+Normal), (Healing+Defensive), (Transform+Agressive) ]")
     battle([(aqua, normal), (healing, defensive), (transform, aggressive)])
 
 
