@@ -174,13 +174,13 @@ if __name__ == "__main__":
 
     print(f"\nSend first batch of data on stream: {batch}")
     stream.process_stream(batch)
-    print("== DataStream statistcs ==")
+    print("== DataStream statistics ==")
     stream.print_processors_stats()
 
     print("\nRegistering other data processors")
     stream.register_processor(TextProcessor())
     stream.register_processor(LogProcessor())
-    print("Send the same batch")
+    print("Send the same batch again")
     stream.process_stream(batch)
     print("== DataStream statistics ==")
     stream.print_processors_stats()
