@@ -46,6 +46,19 @@ def check_dependencies() -> None:
         print("[MISSING] matplotlib - Visualization unavailable")
 
 
+def all_required_available() -> bool:
+    return HAS_PANDAS and HAS_NUMPY and HAS_MATPLOTLIB
+
+
+def print_instructions() -> None:
+    if not all_required_available():
+        print("Missing dependencies. Install with:\n")
+        print("Using pip:")
+        print("pip install -r requirements.txt\n")
+        print("Using Poetry:")
+        print("poetry install")
+
+
 def main() -> None:
     print("LOADING STATUS: Loading programs...\n")
     check_dependencies()
