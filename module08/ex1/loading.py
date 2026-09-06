@@ -62,6 +62,11 @@ def print_instructions() -> None:
 def main() -> None:
     print("LOADING STATUS: Loading programs...\n")
     check_dependencies()
+    print()
+    if all_required_available():
+        pass
+    else:
+        print_instructions()
 
 
 if __name__ == "__main__":
