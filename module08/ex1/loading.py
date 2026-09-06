@@ -12,6 +12,7 @@ except ImportError:
 
 try:
     import matplotlib as mp
+    import matplotlib.pyplot as plt
     HAS_MATPLOTLIB = True
 except ImportError:
     HAS_MATPLOTLIB = False
@@ -21,6 +22,7 @@ try:
     HAS_REQUESTS = True
 except ImportError:
     HAS_REQUESTS = False
+
 
 def check_dependencies() -> None:
     print("Checking dependencies:")
