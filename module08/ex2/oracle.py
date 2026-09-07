@@ -29,3 +29,30 @@ def load_config() -> dict[str, str]:
         "log_level": log_level,
         "zion_endpoint": zion_endpoint
     }
+
+
+def show_config(config: dict[str, str]) -> None:
+    print("Configuration loaded:")
+    print(f"Mode: {config['mode']}")
+    if config['database_url']:
+        print("Database: Connected to local instance")
+    else:
+        print("Database: Not configured")
+    if config['api_key']:
+        print("API Access: Authenticated")
+    else:
+        print("API Access: Not authenticated")
+    print(f"Log Level: {config['log_level']}")
+    if config['zion_endpoint']:
+        print("Zion Network: Online")
+    else:
+        print("Zion Network: Offline")
+
+
+def main() -> None:
+    config = load_config()
+    show_config(config)
+
+
+if __name__ == "__main__":
+    main()
