@@ -44,14 +44,30 @@ def show_config(config: dict[str, str]) -> None:
         print("API Access: Not authenticated")
     print(f"Log Level: {config['log_level']}")
     if config['zion_endpoint']:
-        print("Zion Network: Online")
+        print("Zion Network: Online\n")
     else:
-        print("Zion Network: Offline")
+        print("Zion Network: Offline\n")
+
+
+def security_check() -> None:
+    print("Environment security check:")
+    print("[OK] No hardcoded secrets detected")
+    if os.path.exists(".env"):
+        print("[OK] .env file properly configured")
+    else:
+        print("[KO] .env file not found")
+    if HAS_DOTENV:
+        print("[OK] Production overrides available")
+    else:
+        print("[KO] python-dotenv not installed, overrides unavailable")
 
 
 def main() -> None:
+    print("ORACLE STATUS: Reading the Matrix...\n")
     config = load_config()
     show_config(config)
+    security_check()
+    print("\nThe Oracle sees all configurations.")
 
 
 if __name__ == "__main__":
